@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
+    <title>New information</title>
+</head>
+<body>
+
+<h2 th:text="${info}"></h2>
+
+<form action="/new-info" method="post">
+    <label for="info">Tell me a secret</label>
+    <input type="text" name="info" id="info">
+    <button>Submit</button>
+</form>
+
+</body>
+</html>

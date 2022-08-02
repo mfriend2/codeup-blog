@@ -16,6 +16,6 @@ public class AddInfoController {
     @PostMapping("/new-info")
     public String newInfoSubmission(@RequestParam(name = "info") String info, Model model) {
         model.addAttribute("info", String.format("Did you hear? %s.", info));
-        return "/new-info";
+        return "redirect:/new-info";
     }
 }

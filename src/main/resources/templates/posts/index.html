@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:replace="partials/header.html :: head">
     <meta charset="UTF-8">
     <title>Posts Main Page</title>
 </head>
 <body>
+<div th:replace="partials/navbar.html :: navbar"></div>
     <div th:each="post: ${posts}">
         <h3 th:text="${post.getTitle()}"></h3>
         <p th:text="${post.getBody()}"></p>
     </div>
+
+<div th:replace="partials/JSBodyLink.html :: js-link"></div>
 </body>
 </html>

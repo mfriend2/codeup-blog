@@ -12,7 +12,4 @@ public class RollDiceController {
     public String page() {
         return "roll-dice";
     }
-
-//    @PostMapping("/roll-dice")
-//    public String chosenNum(@RequestParam(name = ""))
 }

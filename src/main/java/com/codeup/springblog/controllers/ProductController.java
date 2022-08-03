@@ -17,6 +17,7 @@ public class ProductController {
     @GetMapping("/products")
     public String all(Model model) {
         model.addAttribute("products", productsDao.findAll());
+        System.out.println(productsDao.getProductByName("Oil - Safflower"));
         return "products/index";
     }
 }

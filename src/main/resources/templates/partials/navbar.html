@@ -16,8 +16,12 @@
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="/">Home</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/posts">Posts</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Posts</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/posts" class="dropdown-item">View Posts</a></li>
+                        <li><a href="/posts/create" class="dropdown-item">Create Post</a></li>
+                    </ul>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/roll-dice">Roll Dice</a>

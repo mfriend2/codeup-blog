@@ -7,6 +7,7 @@
 <div class="mt-3 ms-3">
     <h3 th:text="${post.title}"></h3>
         <p th:text="${post.body}"></p>
+        <p th:text="${post.getUser().getEmail()}"></p>
 </div>
 
 <div th:replace="partials/JSBodyLink.html :: js-link"></div>

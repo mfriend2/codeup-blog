@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,16 +36,30 @@ public class PostController {
     }
 
     @GetMapping(value = "/posts/create")
-    public String createView() {
+    public String createView(Model model) {
+        model.addAttribute("post", new Post());
         return "posts/create";
     }
 
     @PostMapping(value = "/posts/create")
-    public String createPost(@RequestParam("title") String title, @RequestParam("body") String body) {
+    public String createPost(@ModelAttribute Post post) {
         User newUser = new User("new", "new@email.com", "password");
-        Post newPost = new Post(title, body, newUser);
         usersDao.save(newUser);
-        postsDao.save(newPost);
+        postsDao.save(post);
+        return "redirect:/posts";
+    }
+
+    @GetMapping("/posts/{id}/edit")
+    public String editPost(@PathVariable long id, Model model, HttpSession session) {
+        session.setAttribute("id", id);
+        model.addAttribute("post", postsDao.getById(id));
+        return "posts/edit";
+    }
+
+    @PostMapping(value = "/posts/edit")
+    public String submitEdit(@ModelAttribute("post") Post post, HttpSession session) {
+        Long id = (Long) session.getAttribute("id");
+        postsDao.updatePost(id, post.getTitle(), post.getBody());
         return "redirect:/posts";
     }
 }

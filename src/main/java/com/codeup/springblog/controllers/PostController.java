@@ -75,13 +75,13 @@ public class PostController {
     @GetMapping(value = "/posts/tags")
     public String tags(Model model) {
         List<Post> posts = postsDao.findAll();
-        List<Post> postsThatAreFunny = new ArrayList<>();
-        for (Post post : posts) {
-            for (Tag tag: post.getTags()){
-                if(tag.getName().equals("Funny")) postsThatAreFunny.add(post);
-            }
-        }
-        model.addAttribute("posts", postsThatAreFunny);
+//        List<Post> postsThatAreFunny = new ArrayList<>();
+//        for (Post post : posts) {
+//            for (Tag tag: post.getTags()){
+//                if(tag.getName().equals("Funny")) postsThatAreFunny.add(post);
+//            }
+//        }
+        model.addAttribute("posts", posts);
         return "posts/tags";
     }
 }

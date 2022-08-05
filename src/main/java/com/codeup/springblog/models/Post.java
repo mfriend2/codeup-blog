@@ -1,6 +1,7 @@
 package com.codeup.springblog.models;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "posts")
@@ -18,6 +19,14 @@ public class Post {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "post_tag",
+            joinColumns = {@JoinColumn(name = "post_id")},
+            inverseJoinColumns = {@JoinColumn(name = "tag_id")}
+    )
+    private List<Tag> tags;
 
     public Post() {
     }
@@ -44,6 +53,21 @@ public class Post {
         this.title = title;
         this.body = body;
         this.user = user;
+    }
+
+    public Post(long id, String title, String body, User user, List<Tag> tags) {
+        this.id = id;
+        this.title = title;
+        this.body = body;
+        this.user = user;
+        this.tags = tags;
+    }
+
+    public Post(String title, String body, User user, List<Tag> tags) {
+        this.title = title;
+        this.body = body;
+        this.user = user;
+        this.tags = tags;
     }
 
     public long getId() {
@@ -76,5 +100,13 @@ public class Post {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public List<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
     }
 }

@@ -1,21 +1,27 @@
 package com.codeup.springblog.controllers;
 import com.codeup.springblog.models.Post;
+import com.codeup.springblog.models.Tag;
 import com.codeup.springblog.models.User;
 import com.codeup.springblog.repositories.PostRepository;
 import com.codeup.springblog.repositories.UserRepository;
+import com.codeup.springblog.services.EmailService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class PostController {
     private PostRepository postsDao;
     private UserRepository usersDao;
+    private EmailService emailService;
 
-    public PostController(PostRepository postsDao, UserRepository usersDao) {
+    public PostController(PostRepository postsDao, UserRepository usersDao, EmailService emailService) {
         this.postsDao = postsDao;
         this.usersDao = usersDao;
+        this.emailService = emailService;
     }
 
     @GetMapping(value = "/posts")
@@ -38,9 +44,11 @@ public class PostController {
 
     @PostMapping(value = "/posts/create")
     public String createPost(@ModelAttribute Post post) {
-        User newUser = new User("new", "new@email.com", "password");
+        User newUser = new User("new", "mikelfriend2@email.com", "password");
         usersDao.save(newUser);
+        post.setUser(newUser);
         postsDao.save(post);
+        emailService.prepareAndSend(post, post.getTitle(), post.getBody());
         return "redirect:/posts";
     }
 
@@ -62,5 +70,18 @@ public class PostController {
     public String deletePost(@ModelAttribute("post") Post post) {
         postsDao.delete(post);
         return "redirect:/posts";
+    }
+
+    @GetMapping(value = "/posts/tags")
+    public String tags(Model model) {
+        List<Post> posts = postsDao.findAll();
+        List<Post> postsThatAreFunny = new ArrayList<>();
+        for (Post post : posts) {
+            for (Tag tag: post.getTags()){
+                if(tag.getName().equals("Funny")) postsThatAreFunny.add(post);
+            }
+        }
+        model.addAttribute("posts", postsThatAreFunny);
+        return "posts/tags";
     }
 }

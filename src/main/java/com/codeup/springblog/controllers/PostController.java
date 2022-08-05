@@ -62,4 +62,10 @@ public class PostController {
         postsDao.updatePost(id, post.getTitle(), post.getBody());
         return "redirect:/posts";
     }
+
+    @GetMapping(value = "/posts/{id}/delete")
+    public String deletePost(@ModelAttribute("post") Post post) {
+        postsDao.delete(post);
+        return "redirect:/posts";
+    }
 }

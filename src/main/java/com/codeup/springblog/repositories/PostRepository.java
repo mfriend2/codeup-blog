@@ -14,5 +14,5 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     @Query("update Post post set post.title = :title, post.body = :body  where post.id = :id")
     void updatePost(@Param("id") Long id, @Param("title") String title, @Param("body") String body);
 
-
+    Post findByTitle(String title);
 }

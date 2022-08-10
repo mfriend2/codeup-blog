@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -26,11 +26,20 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/roll-dice">Roll Dice</a>
                 </li>
-                <li class="nav-item">
-                    <form th:action="@{/logout}" th:method="post">
-                        <a class="nav-link" href="/login">Logout</a>
-                    </form>
-                </li>
+                <th:block sec:authorize="isAuthenticated()">
+                    <li class="nav-item">
+                        <form th:action="@{/logout}" th:method="post" th:id="logout">
+                            <a class="nav-link" href="/login">Logout</a>
+                        </form>
+                    </li>
+                </th:block>
+                <th:block sec:authorize="!isAuthenticated()">
+                    <li class="nav-item">
+                        <form th:action="@{/login}" th:method="GET">
+                            <a class="nav-link" href="/login">Login</a>
+                        </form>
+                    </li>
+                </th:block>
             </ul>
         </div>
     </div>

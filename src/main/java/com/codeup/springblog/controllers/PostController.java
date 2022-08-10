@@ -59,7 +59,7 @@ public class PostController {
         return "posts/edit";
     }
 
-    @PostMapping(value = "/posts/edit")
+    @PostMapping(value = "/posts/{id}/edit")
     public String submitEdit(@ModelAttribute("post") Post post, HttpSession session) {
         Long id = (Long) session.getAttribute("id");
         postsDao.updatePost(id, post.getTitle(), post.getBody());

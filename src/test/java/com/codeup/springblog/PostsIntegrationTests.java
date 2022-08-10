@@ -153,7 +153,7 @@ public class PostsIntegrationTests {
         // Get the recent Post that matches the title
         Post existingPost = postsDao.findByTitle("post to be deleted");
 
-        // Makes a Post request to /posts/{id}/delete and expect a redirection to the Posts index
+        // Makes a Get request to /posts/{id}/delete and expect a redirection to the Posts index
         this.mvc.perform(
                         get("/posts/" + existingPost.getId() + "/delete").with(csrf())
                                 .session((MockHttpSession) httpSession)
